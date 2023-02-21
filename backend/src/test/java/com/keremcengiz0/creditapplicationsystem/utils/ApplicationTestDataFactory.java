@@ -216,7 +216,7 @@ public class ApplicationTestDataFactory {
                 .salary(BigDecimal.valueOf(4000))
                 .guarantee(BigDecimal.valueOf(2000))
                 .creditScore(600)
-                .creditLimit(BigDecimal.valueOf(10200))
+                .creditLimit(new BigDecimal(10200.00))
                 .creditResult(CreditResult.CONFIRMED)
                 .customer(customerDto)
                 .build();
@@ -238,7 +238,7 @@ public class ApplicationTestDataFactory {
                 .id(1L)
                 .salary(BigDecimal.valueOf(4000))
                 .creditScore(600)
-                .creditLimit(BigDecimal.valueOf(10000))
+                .creditLimit(new BigDecimal(10000.00))
                 .creditResult(CreditResult.CONFIRMED)
                 .customer(customerDto)
                 .build();
@@ -261,7 +261,29 @@ public class ApplicationTestDataFactory {
                 .salary(BigDecimal.valueOf(8000))
                 .guarantee(BigDecimal.valueOf(4000))
                 .creditScore(600)
-                .creditLimit(BigDecimal.valueOf(20800))
+                .creditLimit(new BigDecimal(20800.00))
+                .creditResult(CreditResult.CONFIRMED)
+                .customer(customerDto)
+                .build();
+
+        return applicationDTO;
+    }
+
+    public static ApplicationDTO prepareApplicationDTOForScoreBetween500And1000AndSalaryBetween5000And10000AndGuaranteeIsNullConfirmedApplication() {
+        CustomerDTO customerDto = CustomerDTO.builder()
+                .id(1L)
+                .identityNumber("12345678912")
+                .firstName("Huseyin")
+                .lastName("Cengiz")
+                .phoneNumber("1472583691")
+                .birthDate(LocalDate.of(1998, 3, 5))
+                .build();
+
+        ApplicationDTO applicationDTO = ApplicationDTO.builder()
+                .id(1L)
+                .salary(BigDecimal.valueOf(8000))
+                .creditScore(600)
+                .creditLimit(new BigDecimal(20000.00))
                 .creditResult(CreditResult.CONFIRMED)
                 .customer(customerDto)
                 .build();
@@ -284,7 +306,7 @@ public class ApplicationTestDataFactory {
                 .salary(BigDecimal.valueOf(12000))
                 .guarantee(BigDecimal.valueOf(8000))
                 .creditScore(700)
-                .creditLimit(BigDecimal.valueOf(26000))
+                .creditLimit(new BigDecimal(26000.00))
                 .creditResult(CreditResult.CONFIRMED)
                 .customer(customerDto)
                 .build();
@@ -307,7 +329,7 @@ public class ApplicationTestDataFactory {
                 .salary(BigDecimal.valueOf(15000))
                 .guarantee(BigDecimal.valueOf(10000))
                 .creditScore(1200)
-                .creditLimit(BigDecimal.valueOf(70000))
+                .creditLimit(new BigDecimal(65000.00))
                 .creditResult(CreditResult.CONFIRMED)
                 .customer(customerDto)
                 .build();
@@ -330,7 +352,7 @@ public class ApplicationTestDataFactory {
                 .salary(BigDecimal.valueOf(15000))
                 .guarantee(BigDecimal.valueOf(10000))
                 .creditScore(1200)
-                .creditLimit(BigDecimal.valueOf(70000))
+                .creditLimit(new BigDecimal(70000))
                 .creditResult(CreditResult.CONFIRMED)
                 .customer(customerDto)
                 .build();

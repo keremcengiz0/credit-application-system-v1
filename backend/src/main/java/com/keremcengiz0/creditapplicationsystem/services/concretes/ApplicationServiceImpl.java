@@ -69,7 +69,7 @@ public class ApplicationServiceImpl implements ApplicationService {
 
         Application application = Application.builder()
                 .customer(customer)
-                .creditLimit(applicationResultDTO.getCreditLimit())
+                .creditLimit(applicationResultDTO.getCreditLimit().setScale(2))
                 .creditResult(applicationResultDTO.getCreditResult())
                 .creditScore(this.scoreService.getScore(customer.getIdentityNumber()))
                 .salary(applicationCreateRequest.getSalary())
@@ -77,10 +77,10 @@ public class ApplicationServiceImpl implements ApplicationService {
                 .build();
 
         Boolean status = (application.getCreditResult() == CreditResult.CONFIRMED);
-        this.messageService.sendSms(customer.getPhoneNumber(), status);
+        this.messageService.sendSms(customer.getPhoneNumber(), status, application.getCreditLimit().setScale(2));
         log.info("ApplicationService: SMS sent.");
 
-       Application savedApplication =  this.applicationRepository.save(application);
+        Application savedApplication =  this.applicationRepository.save(application);
 
         return this.applicationMapper.fromApplicationToApplicationDto(savedApplication);
     }
@@ -112,9 +112,12 @@ public class ApplicationServiceImpl implements ApplicationService {
             ApplicationResultDTO applicationResultDTO = new ApplicationResultDTO();
 
             if(guarantee != null) {
-                applicationResultDTO.setCreditLimit(BigDecimal.valueOf(10000).add(guarantee.multiply(BigDecimal.valueOf(0.1))));
+                BigDecimal totalSalary = BigDecimal.valueOf(10000);
+                BigDecimal newTotalSalary = totalSalary.add(guarantee.multiply(BigDecimal.valueOf(0.1))).setScale(2);
+                applicationResultDTO.setCreditLimit(newTotalSalary);
             } else {
-                applicationResultDTO.setCreditLimit(BigDecimal.valueOf(10000));
+                BigDecimal totalSalary = BigDecimal.valueOf(10000).setScale(2);
+                applicationResultDTO.setCreditLimit(totalSalary);
             }
             applicationResultDTO.setCreditResult(CreditResult.CONFIRMED);
             return applicationResultDTO;
@@ -123,9 +126,12 @@ public class ApplicationServiceImpl implements ApplicationService {
         if(score >= 500 && score < 1000 && salary.intValue() <= 10000) {
             ApplicationResultDTO applicationResultDTO = new ApplicationResultDTO();
             if(guarantee != null) {
-                applicationResultDTO.setCreditLimit(BigDecimal.valueOf(20000).add(guarantee.multiply(BigDecimal.valueOf(0.2))));
+                BigDecimal totalSalary = BigDecimal.valueOf(20000);
+                BigDecimal newTotalSalary = totalSalary.add(guarantee.multiply(BigDecimal.valueOf(0.2))).setScale(2);
+                applicationResultDTO.setCreditLimit(newTotalSalary);
             } else {
-                applicationResultDTO.setCreditLimit(BigDecimal.valueOf(20000));
+                BigDecimal totalSalary = BigDecimal.valueOf(20000).setScale(2);
+                applicationResultDTO.setCreditLimit(totalSalary);
             }
             applicationResultDTO.setCreditResult(CreditResult.CONFIRMED);
             return applicationResultDTO;
@@ -134,10 +140,12 @@ public class ApplicationServiceImpl implements ApplicationService {
         if(score >= 500 && score < 1000 && salary.intValue() > 10000) {
             ApplicationResultDTO applicationResultDTO = new ApplicationResultDTO();
             if(guarantee != null) {
-                applicationResultDTO.setCreditLimit(salary.multiply(BigDecimal.valueOf(CreditLimitMultiplier.CREDIT_LIMIT_MULTIPLIER.getValue()/2))
-                        .add(guarantee.multiply(BigDecimal.valueOf(0.25))));
+                BigDecimal totalSalary = salary.multiply(BigDecimal.valueOf(CreditLimitMultiplier.CREDIT_LIMIT_MULTIPLIER.getValue()/2));
+                BigDecimal newTotalSalary = totalSalary.add(guarantee.multiply(BigDecimal.valueOf(0.25))).setScale(2);
+                applicationResultDTO.setCreditLimit(newTotalSalary);
             } else {
-                applicationResultDTO.setCreditLimit(salary.multiply(BigDecimal.valueOf(CreditLimitMultiplier.CREDIT_LIMIT_MULTIPLIER.getValue()/2)));
+                BigDecimal totalSalary = salary.multiply(BigDecimal.valueOf(CreditLimitMultiplier.CREDIT_LIMIT_MULTIPLIER.getValue()/2)).setScale(2);
+                applicationResultDTO.setCreditLimit(totalSalary);
             }
             applicationResultDTO.setCreditResult(CreditResult.CONFIRMED);
             return applicationResultDTO;
@@ -146,15 +154,17 @@ public class ApplicationServiceImpl implements ApplicationService {
         if(score >= 1000) {
             ApplicationResultDTO applicationResultDTO = new ApplicationResultDTO();
             if(guarantee != null) {
-                applicationResultDTO.setCreditLimit(salary.multiply(BigDecimal.valueOf(CreditLimitMultiplier.CREDIT_LIMIT_MULTIPLIER.getValue()))
-                        .add(guarantee.multiply(BigDecimal.valueOf(0.5))));
+                BigDecimal totalSalary = salary.multiply(BigDecimal.valueOf(CreditLimitMultiplier.CREDIT_LIMIT_MULTIPLIER.getValue()));
+                BigDecimal newTotalSalary = totalSalary.add(guarantee.multiply(BigDecimal.valueOf(0.5))).setScale(2);
+                applicationResultDTO.setCreditLimit(newTotalSalary);
             } else {
-                applicationResultDTO.setCreditLimit(salary.multiply(BigDecimal.valueOf(CreditLimitMultiplier.CREDIT_LIMIT_MULTIPLIER.getValue())));
+                BigDecimal totalSalary = salary.multiply(BigDecimal.valueOf(CreditLimitMultiplier.CREDIT_LIMIT_MULTIPLIER.getValue())).setScale(2);
+                applicationResultDTO.setCreditLimit(totalSalary);
             }
             applicationResultDTO.setCreditResult(CreditResult.CONFIRMED);
             return applicationResultDTO;
         }
 
-        return new ApplicationResultDTO(BigDecimal.valueOf(0), CreditResult.UNCONFIRMED);
+        return new ApplicationResultDTO(BigDecimal.ZERO, CreditResult.UNCONFIRMED);
     }
 }

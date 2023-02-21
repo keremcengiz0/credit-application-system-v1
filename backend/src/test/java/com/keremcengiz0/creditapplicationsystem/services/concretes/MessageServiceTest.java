@@ -5,9 +5,10 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
+import java.math.BigDecimal;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @ExtendWith(MockitoExtension.class)
 class MessageServiceTest {
@@ -28,10 +29,10 @@ class MessageServiceTest {
 
     @Test
     void sendSms() {
-        Boolean successResult = messageService.sendSms("5551234567", true);
+        Boolean successResult = messageService.sendSms("5551234567", true, BigDecimal.valueOf(10000));
         assertTrue(successResult);
 
-        Boolean unsuccessfulResult = messageService.sendSms("5551234567", false);
+        Boolean unsuccessfulResult = messageService.sendSms("5551234567", false, BigDecimal.valueOf(0));
         assertTrue(unsuccessfulResult);
     }
 }

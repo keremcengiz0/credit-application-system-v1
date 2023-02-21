@@ -68,11 +68,11 @@ class ApplicationServiceImplTest {
 
         ApplicationDTO actualResponse = applicationService.makeAnApplication(applicationCreateRequest, customerDTO.getIdentityNumber());
 
-        verify(messageService, times(1)).sendSms(customerDTO.getPhoneNumber(),false);
+        verify(messageService, times(1)).sendSms(customerDTO.getPhoneNumber(),false, actualResponse.getCreditLimit().setScale(2));
         verify(applicationRepository, times(1)).save(any(Application.class));
         assertNotNull(actualResponse);
         assertEquals(CreditResult.UNCONFIRMED, actualResponse.getCreditResult());
-        assertEquals(BigDecimal.valueOf(0), actualResponse.getCreditLimit());
+        assertEquals(BigDecimal.ZERO, actualResponse.getCreditLimit());
         assertThat(actualResponse).usingRecursiveComparison().isEqualTo(expectedResponse);
     }
 
@@ -93,11 +93,11 @@ class ApplicationServiceImplTest {
 
         ApplicationDTO actualResponse = applicationService.makeAnApplication(applicationCreateRequest, customerDTO.getIdentityNumber());
 
-        verify(messageService, times(1)).sendSms(customerDTO.getPhoneNumber(),true);
+        verify(messageService, times(1)).sendSms(customerDTO.getPhoneNumber(),true, actualResponse.getCreditLimit().setScale(2));
         verify(applicationRepository, times(1)).save(any(Application.class));
         assertNotNull(actualResponse);
         assertEquals(CreditResult.CONFIRMED, actualResponse.getCreditResult());
-        assertEquals(BigDecimal.valueOf(10200), actualResponse.getCreditLimit());
+        assertEquals(new BigDecimal(10200.00), actualResponse.getCreditLimit());
         assertThat(actualResponse).usingRecursiveComparison().isEqualTo(expectedResponse);
     }
 
@@ -117,11 +117,11 @@ class ApplicationServiceImplTest {
 
         ApplicationDTO actualResponse = applicationService.makeAnApplication(applicationCreateRequest, customerDTO.getIdentityNumber());
 
-        verify(messageService, times(1)).sendSms(customerDTO.getPhoneNumber(),true);
+        verify(messageService, times(1)).sendSms(customerDTO.getPhoneNumber(),true, actualResponse.getCreditLimit().setScale(2));
         verify(applicationRepository, times(1)).save(any(Application.class));
         assertNotNull(actualResponse);
         assertEquals(CreditResult.CONFIRMED, actualResponse.getCreditResult());
-        assertEquals(BigDecimal.valueOf(10000), actualResponse.getCreditLimit());
+        assertEquals(new BigDecimal(10000.00), actualResponse.getCreditLimit());
         assertThat(actualResponse).usingRecursiveComparison().isEqualTo(expectedResponse);
     }
 
@@ -142,11 +142,35 @@ class ApplicationServiceImplTest {
 
         ApplicationDTO actualResponse = applicationService.makeAnApplication(applicationCreateRequest, customerDTO.getIdentityNumber());
 
-        verify(messageService, times(1)).sendSms(customerDTO.getPhoneNumber(),true);
+        verify(messageService, times(1)).sendSms(customerDTO.getPhoneNumber(),true, actualResponse.getCreditLimit().setScale(2));
         verify(applicationRepository, times(1)).save(any(Application.class));
         assertNotNull(actualResponse);
         assertEquals(CreditResult.CONFIRMED, actualResponse.getCreditResult());
-        assertEquals(BigDecimal.valueOf(20800), actualResponse.getCreditLimit());
+        assertEquals(new BigDecimal(20800.00), actualResponse.getCreditLimit());
+        assertThat(actualResponse).usingRecursiveComparison().isEqualTo(expectedResponse);
+    }
+
+    @Test
+    void makeAnApplication_WhenScoreBetween500And1000AndSalaryBetween5000And10000AndGuaranteeIsNull_ThenReturnConfirmedApplication() {
+        ApplicationCreateRequest applicationCreateRequest = ApplicationCreateRequest.builder()
+                .salary(BigDecimal.valueOf(8000))
+                .build();
+
+        CustomerDTO customerDTO = ApplicationTestDataFactory.prepareApplicationDTOForScoreBetween500And1000AndSalaryBetween5000And10000AndGuaranteeIsNullConfirmedApplication().getCustomer();
+        ApplicationDTO applicationDTO = ApplicationTestDataFactory.prepareApplicationDTOForScoreBetween500And1000AndSalaryBetween5000And10000AndGuaranteeIsNullConfirmedApplication();
+        Application expectedResponse = applicationMapper.fromApplicationDtoToApplication(applicationDTO);
+
+        when(customerService.findCustomerByIdentityNumber(customerDTO.getIdentityNumber())).thenReturn(customerDTO);
+        when(scoreService.getScore(customerDTO.getIdentityNumber())).thenReturn(600);
+        when(applicationRepository.save(any(Application.class))).thenReturn(expectedResponse);
+
+        ApplicationDTO actualResponse = applicationService.makeAnApplication(applicationCreateRequest, customerDTO.getIdentityNumber());
+
+        verify(messageService, times(1)).sendSms(customerDTO.getPhoneNumber(),true, actualResponse.getCreditLimit().setScale(2));
+        verify(applicationRepository, times(1)).save(any(Application.class));
+        assertNotNull(actualResponse);
+        assertEquals(CreditResult.CONFIRMED, actualResponse.getCreditResult());
+        assertEquals(new BigDecimal(20000.00), actualResponse.getCreditLimit());
         assertThat(actualResponse).usingRecursiveComparison().isEqualTo(expectedResponse);
     }
 
@@ -167,11 +191,11 @@ class ApplicationServiceImplTest {
 
         ApplicationDTO actualResponse = applicationService.makeAnApplication(applicationCreateRequest, customerDTO.getIdentityNumber());
 
-        verify(messageService, times(1)).sendSms(customerDTO.getPhoneNumber(),true);
+        verify(messageService, times(1)).sendSms(customerDTO.getPhoneNumber(),true, actualResponse.getCreditLimit().setScale(2));
         verify(applicationRepository, times(1)).save(any(Application.class));
         assertNotNull(actualResponse);
         assertEquals(CreditResult.CONFIRMED, actualResponse.getCreditResult());
-        assertEquals(BigDecimal.valueOf(26000), actualResponse.getCreditLimit());
+        assertEquals(new BigDecimal(26000.00), actualResponse.getCreditLimit());
         assertThat(actualResponse).usingRecursiveComparison().isEqualTo(expectedResponse);
     }
 
@@ -192,11 +216,11 @@ class ApplicationServiceImplTest {
 
         ApplicationDTO actualResponse = applicationService.makeAnApplication(applicationCreateRequest, customerDTO.getIdentityNumber());
 
-        verify(messageService, times(1)).sendSms(customerDTO.getPhoneNumber(),true);
+        verify(messageService, times(1)).sendSms(customerDTO.getPhoneNumber(),true, actualResponse.getCreditLimit().setScale(2));
         verify(applicationRepository, times(1)).save(any(Application.class));
         assertNotNull(actualResponse);
         assertEquals(CreditResult.CONFIRMED, actualResponse.getCreditResult());
-        assertEquals(BigDecimal.valueOf(70000), actualResponse.getCreditLimit());
+        assertEquals(new BigDecimal(65000), actualResponse.getCreditLimit());
         assertThat(actualResponse).usingRecursiveComparison().isEqualTo(expectedResponse);
     }
 
@@ -211,7 +235,7 @@ class ApplicationServiceImplTest {
 
         when(customerService.findCustomerByIdentityNumber(anyString())).thenReturn(null);
 
-      assertThrows(UserNotFoundException.class, () -> {
+        assertThrows(UserNotFoundException.class, () -> {
             applicationService.makeAnApplication(applicationCreateRequest, identityNumber);
         });
 
