@@ -11,7 +11,7 @@ services:
     volumes:
       - db_data:/var/lib/mysql
     networks:
-      - credit-application-system_credit-application-system
+      - credit-application-system-network
     ports:
       - "3306:3306"
     restart: always
@@ -28,7 +28,7 @@ services:
       SPRING_DATASOURCE_USERNAME: root
       SPRING_DATASOURCE_PASSWORD: 12345678K.
     networks:
-      - credit-application-system_credit-application-system
+      - credit-application-system-network
     depends_on:
       - credit-application-db
 
@@ -39,12 +39,12 @@ services:
     ports:
       - "3000:3000"
     networks:
-      - credit-application-system_credit-application-system
+      - credit-application-system-network
     restart: always
 
 networks:
-  credit-application-system_credit-application-system:
-    name: credit-application-system_credit-application-system
+  credit-application-system-network:
+    name: credit-application-system-network
 
 volumes:
   db_data:
