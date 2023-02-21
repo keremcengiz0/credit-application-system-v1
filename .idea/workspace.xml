@@ -1,14 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="2bfc8c42-cdf1-40c4-84d9-e89547d301a1" name="Changes" comment="" />
+    <list default="true" id="2bfc8c42-cdf1-40c4-84d9-e89547d301a1" name="Changes" comment="changed directory of docker-compose.yml file.">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/frontend" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
   </component>
   <component name="ProjectId" id="2M3BM6bdTFN5cJ6aWu8yPKyDOMq" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
@@ -33,6 +39,14 @@
       <option name="presentableId" value="Default" />
       <updated>1676986337602</updated>
     </task>
+    <task id="LOCAL-00001" summary="changed directory of docker-compose.yml file.">
+      <created>1676989947005</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1676989947005</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -51,5 +65,7 @@
       <path value="$PROJECT_DIR$/backend" />
       <path value="$PROJECT_DIR$/frontend" />
     </ignored-roots>
+    <MESSAGE value="changed directory of docker-compose.yml file." />
+    <option name="LAST_COMMIT_MESSAGE" value="changed directory of docker-compose.yml file." />
   </component>
 </project>

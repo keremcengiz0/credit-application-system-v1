@@ -18,7 +18,7 @@ services:
 
   backend:
     build:
-      context: ../backend
+      context: ./backend
     container_name: credit-spring
     image: keremcengiz0/creditapplicationsystem:latest
     ports:
@@ -34,7 +34,7 @@ services:
 
   frontend:
     build:
-      context: ../frontend
+      context: ./frontend
     container_name: credit-react
     ports:
       - "3000:3000"
