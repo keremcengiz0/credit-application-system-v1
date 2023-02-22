@@ -29,6 +29,7 @@ services:
       SPRING_DATASOURCE_PASSWORD: 12345678K.
     networks:
       - credit-application-system-network
+      - frontend-network
     depends_on:
       - credit-application-db
 
@@ -39,14 +40,15 @@ services:
     ports:
       - "3000:3000"
     networks:
-      - credit-application-system-network
+      - frontend-network
     restart: always
 
 networks:
   credit-application-system-network:
     name: credit-application-system-network
 
+  frontend-network:
+    name: frontend-network
+
 volumes:
   db_data:
-
-
