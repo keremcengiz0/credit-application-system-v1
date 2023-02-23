@@ -94,6 +94,11 @@ docker-compose up
 
 **After running the "docker-compose up" command, you can monitor the project's startup process in the terminal. Once the project is up and running, you can access and use it by typing http://localhost:3000/ into your browser.**
 
+# Images from Swagger
+
+![swagger1](https://user-images.githubusercontent.com/112478277/220898238-236799df-6e77-4bfb-9a60-1b3fc7753b66.png)
+![swagger2](https://user-images.githubusercontent.com/112478277/220898248-33e84e36-cb98-4681-85dd-0a509b11b4f1.png)
+
 # Images from project
 
 ### Customer creation page
