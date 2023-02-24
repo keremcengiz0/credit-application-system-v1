@@ -60,7 +60,7 @@
 - Lombok
 
 ## Virtualization Technologies
--Docker
+- Docker
 
 ## Technologies Used For Frontend
 - React.js
