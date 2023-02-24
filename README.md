@@ -92,7 +92,7 @@
 docker-compose up
 ```
 
-**After running the "docker-compose up" command, you can monitor the project's startup process in the terminal. Once the project is up and running, you can access and use it by typing http://localhost:3000/ into your browser.**
+**After running the "docker-compose up" command, you can monitor the project's startup process in the terminal. You can check the logs and errors from the terminal. Once the project is up and running, you can access and use it by typing http://localhost:3000/ into your browser.**
 
 # Images from Swagger
 
