@@ -78,6 +78,9 @@
 ## IDE
 - Intellij IDEA
 
+## You can reach the application video of the project from the link below.
+
+https://www.loom.com/share/565c096419524449952f38181e7303ba
 
 # Running Credit Application System locally
 
