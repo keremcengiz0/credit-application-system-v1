@@ -49,6 +49,7 @@
 - Frontend project running
 
 ## Technologies Used For BackEnd
+- Java 11 
 - Spring Boot
 - MySQL Database
 - Tomcat 10
@@ -58,11 +59,15 @@
 - Spring Boot Maven Plugin
 - MySQL Driver
 - Lombok
+- MapStruct
+- OPENAPI (API Documentation)
+- JUnit
 
 ## Virtualization Technologies
 - Docker
 
 ## Technologies Used For Frontend
+- JavaScript
 - React.js
 - Material UI
 
