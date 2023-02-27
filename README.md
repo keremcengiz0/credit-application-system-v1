@@ -99,6 +99,9 @@ docker-compose up
 
 **After running the "docker-compose up" command, you can monitor the project's startup process in the terminal. You can check the logs and errors from the terminal. Once the project is up and running, you can access and use it by typing http://localhost:3000/ into your browser.**
 
+# EER DIAGRAM
+![eer diagram](https://user-images.githubusercontent.com/112478277/221527672-d27e159f-ede5-48ad-bc3b-ac128d1d398c.png)
+
 # Images from Swagger
 
 ![swagger1](https://user-images.githubusercontent.com/112478277/220898238-236799df-6e77-4bfb-9a60-1b3fc7753b66.png)
